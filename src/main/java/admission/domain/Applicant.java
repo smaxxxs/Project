@@ -1,6 +1,16 @@
 package admission.domain;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "aplicants")
 public class Applicant {
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 	private String surname;
 	private String name;
@@ -8,6 +18,35 @@ public class Applicant {
 	private Integer score;
 	// applicant's rating for admission to the faculty. Automatically counted.
 	private Integer rate;
+	private String nickName;
+	private String password;
+
+	public Applicant(Integer id, String surname, String name, Integer score, Integer rate, String nickName,
+			String password) {
+		this.id = id;
+		this.surname = surname;
+		this.name = name;
+		this.score = score;
+		this.rate = rate;
+		this.nickName = nickName;
+		this.password = password;
+	}
+
+	public String getNickName() {
+		return nickName;
+	}
+
+	public void setNickName(String nickName) {
+		this.nickName = nickName;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
 
 	public Applicant() {
 	}
@@ -107,7 +146,9 @@ public class Applicant {
 	@Override
 	public String toString() {
 		return "Applicant [id=" + id + ", surname=" + surname + ", name=" + name + ", score=" + score + ", rate=" + rate
-				+ "]";
+				+ ", nickName=" + nickName + ", password=" + password + "]";
 	}
+
+	
 
 }

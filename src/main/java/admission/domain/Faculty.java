@@ -2,13 +2,29 @@ package admission.domain;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "faculties")
 public class Faculty {
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 	private String name;
-//neede subjects to enter this faculty
+//needed subjects to enter this faculty
+	@OneToMany(fetch= FetchType.EAGER, cascade=CascadeType.ALL, mappedBy = "subjectId")
 	private List<Subject> subjects;
 //allowed number of places
 	private Integer places;
+	@ElementCollection
 	private List<Applicant> applicants;
 //passing grade on this faculty.Automatically counted.
 	private Double grade;
