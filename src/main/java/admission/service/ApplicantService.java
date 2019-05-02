@@ -1,5 +1,7 @@
 package admission.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -26,6 +28,10 @@ public class ApplicantService {
 	   public Applicant findByNickName(String nickName) {
 	    	return applicantRepository.findByNickName(nickName);
 	    }
+	   
+	   public List<Applicant> getAllApplicants(){
+		   return applicantRepository.findAll();
+	   }
 	   
 //	   public Applicant update (Applicant applicant) {
 //		return applicantRepository.update(applicant);

@@ -6,13 +6,15 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "subjects")
 public class Subject {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.AUTO, generator="subject_seq_gen")
+	@SequenceGenerator(name="subject_seq_gen", sequenceName="SUBJECT_SEQ")
 	private Integer subjectId;
 	private String name;
 	@ManyToOne

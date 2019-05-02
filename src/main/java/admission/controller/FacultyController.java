@@ -11,7 +11,6 @@ import admission.domain.Faculty;
 import admission.service.FacultyService;
 
 @Controller
-@RequestMapping("/admin/faculties")
 public class FacultyController {
 
 	@Autowired
@@ -19,8 +18,9 @@ public class FacultyController {
 	
 	@RequestMapping(value = "/addFaculty", method = RequestMethod.POST)
 	public String addNewFaculty(@ModelAttribute("newFaculty") Faculty faculty) {
+		System.out.println(faculty);
 		facultyService.save(faculty);
-		return "redirect:admin";
+		return "redirect:admin#faculty";
 	}
 	@RequestMapping(value = "/addFaculty", method = RequestMethod.GET)
 	public ModelAndView out() {

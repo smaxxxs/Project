@@ -9,16 +9,20 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "requests")
 public class Request {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.AUTO, generator="request_seq_gen")
+	@SequenceGenerator(name="request_seq_gen", sequenceName="REQUEST_SEQ")
 	private Integer id;
 	
-	private Integer faculty_id;
+	@OneToOne(fetch = FetchType.LAZY, optional = false)
+	@JoinColumn(name = "faculty_id", nullable = false)
+	private Faculty faculty;
 	
 	@OneToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "applicant_id", nullable = false)
@@ -31,16 +35,16 @@ public class Request {
 
 	}
 
-	public Request(Integer faculty_id, Applicant applicant, Status status) {
+	public Request(Faculty faculty, Applicant applicant, Status status) {
 
-		this.faculty_id = faculty_id;
+		this.faculty = faculty;
 		this.applicant = applicant;
 		this.status = status;
 	}
 
-	public Request(Integer id, Integer faculty_id, Applicant applicant, Status status) {
+	public Request(Integer id, Faculty faculty, Applicant applicant, Status status) {
 		this.id = id;
-		this.faculty_id = faculty_id;
+		this.faculty = faculty;
 		this.applicant = applicant;
 		this.status = status;
 	}
@@ -53,12 +57,14 @@ public class Request {
 		this.id = id;
 	}
 
-	public Integer getFaculty_id() {
-		return faculty_id;
+
+
+	public Faculty getFaculty() {
+		return faculty;
 	}
 
-	public void setFaculty_id(Integer faculty_id) {
-		this.faculty_id = faculty_id;
+	public void setFaculty(Faculty faculty) {
+		this.faculty = faculty;
 	}
 
 	public Applicant getApplicant() {
@@ -79,7 +85,7 @@ public class Request {
 
 	@Override
 	public String toString() {
-		return "Request [faculty_id=" + faculty_id + ", applicant=" + applicant + ", status=" + status + "]";
+		return "Request [faculty_id=" + faculty + ", applicant=" + applicant + ", status=" + status + "]";
 	}
 
 }

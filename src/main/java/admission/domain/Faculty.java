@@ -10,13 +10,15 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "faculties")
 public class Faculty {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.AUTO, generator="faculty_seq_gen")
+	@SequenceGenerator(name="faculty_seq_gen", sequenceName="FACULTY_SEQ")
 	private Integer id;
 	private String name;
 //needed subjects to enter this faculty
