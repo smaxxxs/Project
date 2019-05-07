@@ -18,7 +18,7 @@
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-<script src="/js/admin.js"></script>
+
 </head>
 <body>
 <p> ${applicant}</p>

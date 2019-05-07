@@ -52,4 +52,24 @@ $(document).ready(function(){
         $(this).parents("tr").remove();
 		$(".add-new").removeAttr("disabled");
     });
+	// Change request status
+	$(document).on("click", ".approve", function(){
+		var reqIdApprove = $(this).parents("tr").find(".req_id").html();
+		alert(reqIdApprove);
+		debugger;
+		$.ajax({
+		      type: "POST",
+		      contentType : 'application/json; charset=utf-8',
+		      dataType : 'string',
+		      url: "/approve",
+		      data: JSON.stringify({reqIdApprove:reqIdApprove}), // Note it is important
+		      success:function(result) {
+		       // do what ever you want with data
+		     }
+		})
+			
+			$(this).parents("tr").find(".add, .edit").toggle();
+			$(".add-new").removeAttr("disabled");
+				
+    });
 });

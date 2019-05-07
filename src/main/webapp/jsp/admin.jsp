@@ -179,16 +179,15 @@
 
 										<c:forEach items="${requests}" var="request">
 											<tr>
-												<td>${request.id}</td>
+												<td class="req_id">${request.id}</td>
 												<td title="${request.faculty}">${request.faculty.name}</td>
-												<td title="${request.applicant}">${request.applicant.surname} ${request.applicant.name}</td>
-												<td>${request.status}</td>
-												<td><a class="add" title="Add" data-toggle="tooltip"><i
-														class="material-icons">&#xE03B;</i></a> <a class="edit"
-													title="Edit" data-toggle="tooltip"><i
-														class="material-icons">&#xE254;</i></a> <a class="delete"
-													title="Delete" data-toggle="tooltip"><i
-														class="material-icons">&#xE872;</i></a></td>
+												<td title="${request.applicant}">${request.applicant.surname}
+													${request.applicant.name}</td>
+												<td class="status">${request.status}</td>
+												<td><a class="approve" title="Approve"
+													data-toggle="tooltip"><i class="material-icons" style="color:green">thumb_up</i></a>
+																		<a title="Decline" data-toggle="tooltip"><i
+														class="material-icons" style="color:red">thumb_down</i></a></td>
 											</tr>
 										</c:forEach>
 										<tr>
