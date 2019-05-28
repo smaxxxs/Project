@@ -34,7 +34,7 @@
 			<div class="collapse navbar-collapse" id="navbarResponsive">
 				<ul class="navbar-nav ml-auto">
 					<li class="nav-item"><a class="nav-link js-scroll-trigger"
-						href="login">Login</a></li>
+						href="login">Login/Register</a></li>
 					<li class="nav-item"><a class="nav-link js-scroll-trigger"
 						href="#about">About</a></li>
 					<li class="nav-item"><a class="nav-link js-scroll-trigger"

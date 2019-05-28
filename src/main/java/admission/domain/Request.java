@@ -3,12 +3,11 @@ package admission.domain;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -20,11 +19,11 @@ public class Request {
 	@SequenceGenerator(name="request_seq_gen", sequenceName="REQUEST_SEQ")
 	private Integer id;
 	
-	@OneToOne(fetch = FetchType.LAZY, optional = false)
+	@ManyToOne
 	@JoinColumn(name = "faculty_id", nullable = false)
 	private Faculty faculty;
 	
-	@OneToOne(fetch = FetchType.LAZY, optional = false)
+	@ManyToOne
 	@JoinColumn(name = "applicant_id", nullable = false)
 	private Applicant applicant;
 	

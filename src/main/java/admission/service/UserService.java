@@ -1,5 +1,7 @@
 package admission.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -13,9 +15,13 @@ import admission.domain.User;
 public class UserService {
 	 @Autowired
 	    private UserRepository userRepository;
+	 
 
 	    @Autowired
 	    private PasswordEncoder bCryptPasswordEncoder;
+	    
+	    @Autowired
+	    private ApplicantService applicantService;
 
 
 	    public void save(User user) {
@@ -43,4 +49,25 @@ public class UserService {
 			
 	    	
 	    }
+	    public List <User> findAll(){
+	    	return userRepository.findAll();
+	    }
+	    public void cleanEmptyApplicants() {
+	    	List <User> users =findAll();
+	    	for (User user : users) {
+	    		String nickName = user.getNickName();
+				if (applicantService.findByNickName(nickName)==null && user.getRole()==Role.USER) {
+					deleteByNickName(nickName);
+				}
+			}
+	    }
+
+		public User findByNickName(String nickName) {
+			
+			return userRepository.findByNickName(nickName);
+		}
+		
+		public void deleteByNickName(String nick) {
+			userRepository.delete(findByNickName(nick));
+		}
 }

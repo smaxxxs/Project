@@ -1,5 +1,7 @@
 package admission.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +16,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
 import admission.dao.UserRepository;
+import admission.domain.Applicant;
 import admission.domain.Faculty;
+import admission.domain.Request;
+import admission.domain.Status;
 import admission.domain.Subject;
 import admission.domain.User;
 import admission.service.ApplicantService;
@@ -55,13 +60,38 @@ public class AdminController {
 			model.addAttribute("subjects",subjectService.getAllSubjectss());
 			return "admin";
 	}
-	@RequestMapping(value="/approve",method=RequestMethod.POST,consumes=MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody String getApprove(@RequestParam(value="reqIdApprove", required = false) Object reqId,HttpServletRequest request) {
-		System.out.println("aaaaaapppppppproooooved"+request.toString()+reqId);
-	//	requestService.findById(reqId).setStatus(Status.approved);
-	return "redirect:admin";
+
+	@RequestMapping(value = "/approve", method = RequestMethod.POST)
+	public @ResponseBody
+	String changeStatusApprove(@RequestParam(value = "val", required = true) String parse) {
+	    Integer reqId= Integer.parseInt(parse);
+	    Request thisRequest = requestService.findById(reqId);
+		thisRequest.setStatus(Status.approved);
+		requestService.save(thisRequest);
+		
+//Save applicant to faculty	after approved	
+		Faculty thisFaculty = facultyService.findById(thisRequest.getFaculty().getId());
+	//	List<Applicant> applicants = thisFaculty.getApplicants();
+		Applicant applicant = applicantService.findByNickName(thisRequest.getApplicant().getNickName());
+//		applicants.add(applicant);
+//		thisFaculty.setApplicants(applicants);
+		facultyService.saveAndRate(thisFaculty, applicant);
+		System.out.println(thisFaculty.toString()+applicant);
+	   	return parse;
 	}
 	
+	@RequestMapping(value = "/decline", method = RequestMethod.POST)
+	public @ResponseBody
+	String changeStatusDecline(@RequestParam(value = "val", required = true) String parse) {
+	    Integer reqId= Integer.parseInt(parse);
+	    Request thisRequest = requestService.findById(reqId);
+		thisRequest.setStatus(Status.declined);
+		Faculty thisFaculty = facultyService.findById(thisRequest.getFaculty().getId());
+		Applicant applicant = applicantService.findByNickName(thisRequest.getApplicant().getNickName());
+		facultyService.deleteAndRate(thisFaculty, applicant);
+		requestService.save(thisRequest);
+		  	return parse;
+	}
 }
 
 

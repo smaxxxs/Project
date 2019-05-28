@@ -57,6 +57,9 @@
     table.table td a.edit {
         color: #FFC107;
     }
+     table.table td a.editf {
+        color: #FFC107;
+    }
     table.table td a.delete {
         color: #E34724;
     }

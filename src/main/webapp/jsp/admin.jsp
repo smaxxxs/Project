@@ -4,6 +4,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,8 +20,9 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<!-- <script src="//code.jquery.com/jquery-1.11.1.min.js"></script> -->
 <script src="/js/admin.js"></script>
+<script> $(function() { $( "#tabs" ).tabs() }); </script>
 </head>
 <body>
 	<div class="container">
@@ -71,17 +73,19 @@
 
 											<c:forEach items="${faculties}" var="faculty">
 												<tr>
-													<td>${faculty.id}</td>
-													<td>${faculty.name}</td>
+													<td class="faculty_id">${faculty.id}</td>
+													<td ><a  class="faculty_name" href="faculty?facultyId=${faculty.id}">${faculty.name}</a></td>
 													<td>${faculty.places}</td>
 													
 													<td><c:forEach items ="${faculty.subjects}" var="subject">${subject.name}; &nbsp</c:forEach></td>
 													
-													<td>${faculty.applicants}</td>
-													<td><a class="add" title="Add" data-toggle="tooltip"><i
-															class="material-icons">&#xE03B;</i></a> <a class="edit"
+													<td>${fn:length(faculty.applicants)}</td>
+													<td>
+													
+															
+															 <a class="editf" href="faculty?facultyId=${faculty.id}"
 														title="Edit" data-toggle="tooltip"><i
-															class="material-icons">&#xE254;</i></a> <a class="delete"
+															class="material-icons">&#xE254;</i></a> <a class="delete facultyToDelete"
 														title="Delete" data-toggle="tooltip"><i
 															class="material-icons">&#xE872;</i></a></td>
 												</tr>
@@ -134,14 +138,14 @@
 
 										<c:forEach items="${applicants}" var="applicant">
 											<tr>
-												<td>${applicant.id}</td>
+												<td class="applicant_id">${applicant.id}</td>
 												<td>${applicant.surname}</td>
 												<td>${applicant.name}</td>
 												<td>${applicant.score}</td>
 												<td><a class="add" title="Add" data-toggle="tooltip"><i
 														class="material-icons">&#xE03B;</i></a> <a class="edit"
 													title="Edit" data-toggle="tooltip"><i
-														class="material-icons">&#xE254;</i></a> <a class="delete"
+														class="material-icons">&#xE254;</i></a> <a class="delete applicantToDelete"
 													title="Delete" data-toggle="tooltip"><i
 														class="material-icons">&#xE872;</i></a></td>
 											</tr>
@@ -186,7 +190,7 @@
 												<td class="status">${request.status}</td>
 												<td><a class="approve" title="Approve"
 													data-toggle="tooltip"><i class="material-icons" style="color:green">thumb_up</i></a>
-																		<a title="Decline" data-toggle="tooltip"><i
+																		<a title="Decline" class="decline" data-toggle="tooltip"><i
 														class="material-icons" style="color:red">thumb_down</i></a></td>
 											</tr>
 										</c:forEach>
@@ -272,7 +276,7 @@
 						<div class="tab-pane" id="logout">
 							<div class="">
 								<h1>Do you realy want to leave admin tools?</h1>
-							 <a href="#" class="exitButton">exit</a>
+							 <a href="<c:url value="/logout" />" class="exitButton">exit</a>
 							</div>
 						</div>
 					</div>

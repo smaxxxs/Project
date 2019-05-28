@@ -98,6 +98,61 @@ public class Faculty {
 	public void setGrade(Double grade) {
 		this.grade = grade;
 	}
+ 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((applicants == null) ? 0 : applicants.hashCode());
+		result = prime * result + ((grade == null) ? 0 : grade.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + ((places == null) ? 0 : places.hashCode());
+		result = prime * result + ((subjects == null) ? 0 : subjects.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Faculty other = (Faculty) obj;
+		if (applicants == null) {
+			if (other.applicants != null)
+				return false;
+		} else if (!applicants.equals(other.applicants))
+			return false;
+		if (grade == null) {
+			if (other.grade != null)
+				return false;
+		} else if (!grade.equals(other.grade))
+			return false;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
+			return false;
+		if (places == null) {
+			if (other.places != null)
+				return false;
+		} else if (!places.equals(other.places))
+			return false;
+		if (subjects == null) {
+			if (other.subjects != null)
+				return false;
+		} else if (!subjects.equals(other.subjects))
+			return false;
+		return true;
+	}
 
 	@Override
 	public String toString() {

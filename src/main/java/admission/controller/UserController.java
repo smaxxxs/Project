@@ -3,7 +3,7 @@ package admission.controller;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -18,8 +18,9 @@ import admission.domain.Applicant;
 import admission.domain.Role;
 import admission.domain.User;
 import admission.service.ApplicantService;
+import admission.service.UserService;
 
-@SessionAttributes({"appNick","adminNick"})
+@SessionAttributes({ "appNick", "adminNick" })
 @Controller
 public class UserController {
 
@@ -27,7 +28,10 @@ public class UserController {
 	private ApplicantService appService;
 
 	@Autowired
-	private UserRepository userRepo;
+	private UserService userService;
+
+	@Autowired
+	private PasswordEncoder bCryptPasswordEncoder;
 
 //	@RequestMapping(value = "/userlogin", method = { RequestMethod.GET, RequestMethod.POST })
 //	public String login(@ModelAttribute("userlogin") User user, RedirectAttributes redirAttributes) {
@@ -49,12 +53,15 @@ public class UserController {
 //	}
 
 	@RequestMapping(value = "/userlogin", method = { RequestMethod.GET, RequestMethod.POST })
-	public ModelAndView login(@ModelAttribute("userlogin") User user, RedirectAttributes redirAttributes,HttpSession session) {
-		ModelAndView mav =new ModelAndView();
+	public ModelAndView login(@ModelAttribute("userlogin") User user, RedirectAttributes redirAttributes,
+			HttpSession session) {
+		ModelAndView mav = new ModelAndView();
 		mav.setViewName("redirect:login");
 		String nickName = user.getNickName();
-		User consistUser = userRepo.findByNickName(nickName);
-		if (consistUser != null && consistUser.getPassword().equals(user.getPassword())) {
+		User consistUser = userService.findByNickName(nickName);
+		if (consistUser != null &&
+				(consistUser.getPassword().equals((user.getPassword()))||
+				bCryptPasswordEncoder.matches( user.getPassword(), consistUser.getPassword()))) {
 			if (consistUser.getRole() == Role.ADMIN) {
 //				mav.addObject("adminNick", nickName);
 				session.setAttribute("adminNick", nickName);
@@ -65,11 +72,15 @@ public class UserController {
 				mav.setViewName("redirect:applicant");
 			}
 
-		}else
-		redirAttributes.addFlashAttribute("message", "login or password was incorrect! Try again to login");
+		} else
+		if (consistUser==null) 
+		{redirAttributes.addFlashAttribute("message", "login was incorrect! Try again to login");}	
+		else redirAttributes.addFlashAttribute("message", "password was incorrect! Try again to login");
+		
 		System.out.println(mav);
 		return mav;
 	}
+
 	@RequestMapping(value = "/userregister", method = RequestMethod.GET)
 	public String registration() {
 		return "redirect:applicant";
@@ -78,9 +89,9 @@ public class UserController {
 	@RequestMapping(value = "/userregister", method = { RequestMethod.POST })
 	public String registration(@ModelAttribute("userregister") Applicant newApplicant,
 			RedirectAttributes redirAttributes, HttpSession session) {
-		//validation only by Nickname
+		// validation only by Nickname
 		String nickName = newApplicant.getNickName();
-		if (userRepo.findByNickName(nickName) != null) {
+		if (userService.findByNickName(nickName) != null) {
 			redirAttributes.addFlashAttribute("message", "This NickName is used. Choose other");
 			return "redirect:login";
 		}
@@ -89,12 +100,12 @@ public class UserController {
 
 		return "redirect:applicant";
 	}
-	
+
 	@RequestMapping(value = "/addAdmin", method = { RequestMethod.POST })
-	public String  newAddmin(@ModelAttribute("newAdmin") User user) {
+	public String newAddmin(@ModelAttribute("newAdmin") User user) {
 		user.setRole(Role.ADMIN);
-		userRepo.save(user);
-		return  "forward:admin";
+		userService.save(user);
+		return "forward:admin";
 	}
 
 	@RequestMapping(value = { "/login" }, method = RequestMethod.GET)
@@ -102,7 +113,7 @@ public class UserController {
 		model.addAttribute("userlogin", new User());
 		model.addAttribute("userregister", new Applicant());
 		model.addAttribute("message", string);
-		
+
 		return "login";
 	}
 
