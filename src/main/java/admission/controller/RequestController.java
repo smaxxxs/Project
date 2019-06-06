@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
+import admission.domain.Applicant;
+import admission.domain.Faculty;
 import admission.domain.Request;
 import admission.domain.Status;
 import admission.service.ApplicantService;
@@ -50,8 +52,13 @@ public class RequestController {
 	@RequestMapping(value = "/deleteRequest", method = RequestMethod.POST)
 	public @ResponseBody
 	String deleteRequest(@RequestParam(value = "val", required = true) String parse) {
-	    Integer appId= Integer.parseInt(parse);
-	    requestService.deleteById(appId);
+	    Integer reqId= Integer.parseInt(parse);
+	    Request thisRequest = requestService.findById(reqId);
+	    Faculty thisFaculty = facultyService.findById(thisRequest.getFaculty().getId());
+		Applicant applicant = applicantService.findByNickName(thisRequest.getApplicant().getNickName());
+		facultyService.deleteAndRate(thisFaculty, applicant);
+	    requestService.deleteById(reqId);
+	    
 	    return "applicant";
 	}
 

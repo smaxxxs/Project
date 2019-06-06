@@ -25,6 +25,7 @@
 <div class="message">
 <h1> ${error} - You Shall Not Pass</h1>
 <p>Uh oh, Gandalf is blocking the way!<br/>Maybe you have a typo in the url? Or you meant to go to a different location? Like...Hobbiton?</p>
+<br><a href="/"> Go Home!!!</a>
 </div>
 </body>
 </html>

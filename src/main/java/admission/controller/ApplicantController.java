@@ -70,6 +70,21 @@ public class ApplicantController {
 	    Integer appId= Integer.parseInt(parse);
 	    applicantService.deleteById(appId);
 	    return "admin";
+	}
+	    @RequestMapping(value = "/editApplicant", method = RequestMethod.POST)
+		public @ResponseBody
+		String editApplicant(@RequestParam(value = "id", required = true) String parse,
+				@RequestParam(value = "surname", required = true) String surname,
+				@RequestParam(value = "name", required = true) String name,
+				@RequestParam(value = "score", required = true) String scoreStr) {
+		    Integer appId= Integer.parseInt(parse);
+		    Integer score= Integer.parseInt(scoreStr);
+		    Applicant editApp = applicantService.findById(appId).get();
+		    editApp.setSurname(surname);
+		    editApp.setName(name);
+		    editApp.setScore(score);
+		    applicantService.save(editApp);
+		    return "admin";
 }
 	@RequestMapping(value = "/uploadFile", method = RequestMethod.POST)
 	public String submit(@RequestParam("photo") MultipartFile file, ModelMap modelMap,

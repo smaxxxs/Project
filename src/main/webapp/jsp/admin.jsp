@@ -94,15 +94,15 @@
 												<td></td>
 												<td><form:input type="text" class="form-control"
 														path="name" name="name" id="name" /></td>
-												<td><form:input type="text" class="form-control"
+												<td><form:input type="number" class="form-control"
 														path="places" name="department" id="department" /></td>
 												<%-- <td><form:input type="text" class="form-control"
 														path="subjects" name="phone" id="phone" /></td> --%>
-												<td><form:select id="uexperience" class="decorated" path="subjects" multiple = "multiple">
+												<td><%-- <form:select id="uexperience" class="decorated" path="subjects" multiple = "multiple">
                   <option id="selectHeader"> Select subjects</option>
                               <form:options items="${subjects}" itemValue="subjectId" itemLabel="subjectId" />
               
-                  </form:select></td>
+                  </form:select> --%></td>
 												<td></td>
 												<td>
 													<button class="btn_sign_up" type="submit">add</button> <!--                         <input type="submit" value="    add    " /> -->
@@ -142,8 +142,8 @@
 												<td>${applicant.surname}</td>
 												<td>${applicant.name}</td>
 												<td>${applicant.score}</td>
-												<td><a class="add" title="Add" data-toggle="tooltip"><i
-														class="material-icons">&#xE03B;</i></a> <a class="edit"
+												<td><a class="add editApplicantConfirm" title="Add" data-toggle="tooltip"><i
+														class="material-icons">&#xE03B;</i></a> <a class="edit editApplicant"
 													title="Edit" data-toggle="tooltip"><i
 														class="material-icons">&#xE254;</i></a> <a class="delete applicantToDelete"
 													title="Delete" data-toggle="tooltip"><i
@@ -230,12 +230,12 @@
 
 											<c:forEach items="${subjects}" var="subject">
 												<tr>
-													<td>${subject.subjectId}</td>
-													<td>${subject.name}</td>
-													<td><a class="add" title="Add" data-toggle="tooltip"><i
+													<td class="subject_id">${subject.subjectId}</td>
+													<td class="subject_name">${subject.name}</td>
+													<td><a class="add editSubjectConfirm" title="Add" data-toggle="tooltip"><i
 															class="material-icons">&#xE03B;</i></a> <a class="edit"
 														title="Edit" data-toggle="tooltip"><i
-															class="material-icons">&#xE254;</i></a> <a class="delete"
+															class="material-icons">&#xE254;</i></a> <a class="delete subjectToDelete"
 														title="Delete" data-toggle="tooltip"><i
 															class="material-icons">&#xE872;</i></a></td>
 												</tr>
@@ -258,7 +258,7 @@
 
 						<div class="tab-pane" id="addNewAdmin">
 							<div class="table-wrapper">
-								<h1>You can add new addmin here</h1>
+								<h1>You can add new admin here</h1>
 									<form:form method="post" action="/addAdmin"
 									modelAttribute="newAdmin">
 								

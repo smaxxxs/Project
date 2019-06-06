@@ -26,10 +26,16 @@
   <div class="container">
   <div class="row">
   <div class="col-lg-6">
+  <div class ="appInfo"> 
+  <h5>Surname: ${applicant.surname}</h5>
+  <h5>Name: ${applicant.name}</h5>
+  <h5>My nickName: ${applicant.nickName}</h5>
+  <h5>MyScore: ${applicant.score}</h5>
   
+  </div>
   <div class="card" style="width: 18rem;">
   <div class="img_wraper">
-  <img class="card-img-top" src="/photos/${applicant.nickName}.jpg" alt="Card image cap">
+  <img  src="/photos/${applicant.nickName}.jpg">
   </div>
   <div class="card-body">
     
@@ -42,12 +48,7 @@
        
 </form:form>
   </div>
-  <div class ="appInfo"> 
-  <h5>Surname: ${applicant.surname}</h5>
-  <h5>Name: ${applicant.name}</h5>
-  <h5>Score: ${applicant.score}</h5>
-  <h5>Rate: ${applicant.rate}</h5>
-  </div>
+  
 </div>
   </div>
   </div>
@@ -63,21 +64,21 @@
 							---------</option>
 						<form:options items="${subjects}" itemLabel="name" />
 					</form:select>
-					<input id="s1" type="text" onchange="getChar()"/>
+					<input id="s1" type="number" onchange="getChar()"/>
 						<br>
 					<form:select class="decorated" path="">
 						<option id="selectHeader">--------- Select Subject
 							---------</option>
 						<form:options items="${subjects}" itemLabel="name" />
 					</form:select>
-					<input id = "s2" type="text" onchange="getChar()"/>
+					<input id = "s2" type="number" onchange="getChar()"/>
 						<br>
 					<form:select class="decorated" path="">
 						<option id="selectHeader">--------- Select Subject
 							---------</option>
 						<form:options items="${subjects}" itemLabel="name" />
 					</form:select>
-					<input id="s3" type="text" onchange="getChar()"/>
+					<input id="s3" type="number" onchange="getChar()"/>
 					<br>
 					<input type="button"  class="myScore" value="My score" onclick="addition()"><br>
 					<form:input type="text" class = "result" id="result" path="score"/>
@@ -94,8 +95,9 @@
 										<tr>
 											<th>Id</th>
 											<th>Faculty</th>
+											<th>Faculty grade</th>
 											<th>My score</th>
-											<th>My rate</th>
+											
 											<th>Status</th>
 											<th>Action</th>
 										</tr>
@@ -103,11 +105,11 @@
 									<tbody>
 
 										<c:forEach items="${myRequests}" var="request">
+												<tr>
 												<td class="req_id">${request.id}</td>
-											<tr>
 												<td title="${request.faculty}">${request.faculty.name}</td>
+												<td >${request.faculty.grade}</td>
 												<td >${applicant.score}	</td>
-												<td >${applicant.rate}</td>
 												<td class="status">${request.status}</td>
 												<td> <a class="delete requestToDelete"
 													title="Delete" data-toggle="tooltip"><i

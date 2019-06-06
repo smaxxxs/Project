@@ -31,7 +31,7 @@
 			$(document).on("click", ".requestToDelete", function() {
 				var id = $(this).parents("tr")
 				.find(".req_id").html();
-				if (confirm("Are you sure to delete equest witd id="+id)){
+				if (confirm("Are you sure to delete request witd id="+id)){
 						$.ajax({
 						url : "/deleteRequest",
 						type : "POST",

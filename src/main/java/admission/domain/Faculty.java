@@ -1,17 +1,18 @@
 package admission.domain;
 
 import java.util.List;
+import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
+import admission.config.FacultyRating;
 
 @Entity
 @Table(name = "faculties")
@@ -22,7 +23,7 @@ public class Faculty {
 	private Integer id;
 	private String name;
 //needed subjects to enter this faculty
-	@OneToMany(fetch= FetchType.EAGER, cascade=CascadeType.ALL, mappedBy = "subjectId")
+	@ElementCollection
 	private List<Subject> subjects;
 //allowed number of places
 	private Integer places;
@@ -31,6 +32,8 @@ public class Faculty {
 //passing grade on this faculty.Automatically counted.
 	private Double grade;
 
+	@OneToMany(mappedBy = "faculty")
+	    Set<FacultyRating> ratings;
 	public Faculty() {
 
 	}
@@ -97,6 +100,14 @@ public class Faculty {
 
 	public void setGrade(Double grade) {
 		this.grade = grade;
+	}
+	
+	 public Set<FacultyRating> getRatings() {
+		return ratings;
+	}
+
+	public void setRatings(Set<FacultyRating> ratings) {
+		this.ratings = ratings;
 	}
  
 	@Override

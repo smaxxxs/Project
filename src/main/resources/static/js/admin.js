@@ -42,24 +42,24 @@ $(document).ready(
 			
 			// Add row on add button click
 			$(document).on("click", ".add", function() {
-				var empty = false;
-				var input = $(this).parents("tr").find('input[type="text"]');
-				input.each(function() {
-					if (!$(this).val()) {
-						$(this).addClass("error");
-						empty = true;
-					} else {
-						$(this).removeClass("error");
-					}
-				});
-				$(this).parents("tr").find(".error").first().focus();
-				if (!empty) {
-					input.each(function() {
-						$(this).parent("td").html($(this).val());
-					});
+//				var empty = false;
+//				var input = $(this).parents("tr").find('input[type="text"]');
+//				input.each(function() {
+//					if (!$(this).val()) {
+//						$(this).addClass("error");
+//						empty = true;
+//					} else {
+//						$(this).removeClass("error");
+//					}
+//				});
+//				$(this).parents("tr").find(".error").first().focus();
+//				if (!empty) {
+//					input.each(function() {
+//						$(this).parent("td").html($(this).val());
+//					});
 					$(this).parents("tr").find(".add, .edit").toggle();
 					$(".add-new").removeAttr("disabled");
-				}
+//				}
 			});
 			
 			// Edit row on edit button click
@@ -67,10 +67,11 @@ $(document).ready(
 					"click",
 					".edit",
 					function() {
-						$(this).parents("tr").find("td:not(:last-child)").each(
+					
+						$(this).parents("tr").find("td:not(:last-child):not(:first-child)").each(
 								function() {
 									$(this).html(
-											'<input type="text" class="form-control" value="'
+											'<input type="text" class="form-control appIinput" value="'
 													+ $(this).text() + '">');
 								});
 						$(this).parents("tr").find(".add, .edit").toggle();
@@ -90,6 +91,28 @@ $(document).ready(
 						async : false,
 						data : {
 							val : facultyId
+						},
+						dataType : 'html',
+						success : function() {
+							alert("success deleted");
+							window.location.reload();
+						}
+					});
+				}
+			});
+			// Delete Subject
+			$(document).on("click", ".subjectToDelete", function() {
+				var name = $(this).parents("tr")
+				.find(".subject_name").html();
+				if (confirm("Are you sure to delete //"+name+"// subject")){
+					var subjectId = $(this).parents("tr")
+					.find(".subject_id").html();
+					$.ajax({
+						url : "/deleteSubject",
+						type : "POST",
+						async : false,
+						data : {
+							val : subjectId
 						},
 						dataType : 'html',
 						success : function() {
@@ -119,6 +142,64 @@ $(document).ready(
 						}
 					});
 				}
+			});
+			// Edit applicant
+
+			$(document).on("click", ".editApplicantConfirm", function() {
+				debugger;
+			
+				var input = document.getElementsByClassName("appIinput");
+				var id= $(this).parents("tr").find(".applicant_id").html();
+				var surname= input[0].value;
+				var name= input[1].value;
+				var score= input[2].value;
+				$.ajax({
+					url : "/editApplicant",
+					type : "POST",
+					async : false,
+					data : {
+						id : id,
+						surname: surname,
+						name: name,
+						score: score
+					},
+					dataType : 'html',
+					success : function() {
+						alert("success changed");
+						window.location.reload();
+					}
+				});
+				
+					
+				
+			});
+			// Edit subject
+
+			$(document).on("click", ".editSubjectConfirm", function() {
+				debugger;
+			
+				var input = document.getElementsByClassName("appIinput");
+				var id= $(this).parents("tr").find(".subject_id").html();
+				
+				var name= input[0].value;
+			
+				$.ajax({
+					url : "/editSubject",
+					type : "POST",
+					async : false,
+					data : {
+						id:id,
+							name: name
+										},
+					dataType : 'html',
+					success : function() {
+						alert("success changed");
+						window.location.reload();
+					}
+				});
+				
+					
+				
 			});
 			// Change request status
 			$(document).on(

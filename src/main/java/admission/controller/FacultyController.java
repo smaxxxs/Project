@@ -14,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 import admission.domain.Faculty;
 import admission.service.FacultyService;
 import admission.service.RequestService;
+import admission.service.SubjectService;
 import admission.service.UserService;
 
 @Controller
@@ -28,9 +29,12 @@ public class FacultyController {
 	@Autowired
 	private RequestService requestService;
 	
+	@Autowired
+	private SubjectService subjectService;
+	
 	@RequestMapping(value = "/addFaculty", method = RequestMethod.POST)
 	public String addNewFaculty(@ModelAttribute("newFaculty") Faculty faculty) {
-		System.out.println(faculty);
+	
 		facultyService.save(faculty);
 		return "redirect:admin#faculty";
 	}
@@ -41,12 +45,26 @@ public class FacultyController {
 		return mav;
 		
 	}
+	@RequestMapping(value = "/editFaculty", method = RequestMethod.POST)
+	public ModelAndView editFaculty(@ModelAttribute("thisFaculty") Faculty faculty) {
+		ModelAndView mav =new ModelAndView("redirect:faculty");
+		mav.addObject("facultyId", faculty.getId());
+		Faculty oldFaculty=facultyService.findById(faculty.getId());
+		oldFaculty.setName(faculty.getName());
+		oldFaculty.setPlaces(faculty.getPlaces());
+		oldFaculty.setSubjects(faculty.getSubjects());
+		facultyService.save(oldFaculty);
+		return mav;
+		
+	}
 	@RequestMapping ("faculty")
     public String getStudent(@RequestParam  Integer facultyId, Model model,
     		@SessionAttribute("adminNick") String nickName){
         Faculty faculty = facultyService.findById(facultyId);
         model.addAttribute("faculty", faculty);
+        model.addAttribute("thisFaculty", new Faculty());
         model.addAttribute("admin", userService.findByNickName(nickName));
+        model.addAttribute("subjects", subjectService.getAllSubjectss());
         return "faculty";
     }
 	@RequestMapping(value = "/deleteFaculty", method = RequestMethod.POST)

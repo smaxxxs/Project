@@ -2,7 +2,8 @@
   background-color: #eb4e24;
   height: 800px;
 }
-input[type=text],
+
+input[type=text],input[type=number],
 #uexperience,
 #equalification,
 #roles {
@@ -15,11 +16,16 @@ input[type=text],
 }
 .img_wraper{
 	width: 250px;
+	height:350px;
 	float:left;
+	background-image: url("/photos/nophoto.jpg");
+	background-size: cover;
+
 }
 .img_wraper>img{
 	object-fit: cover;
 	width: 250px;
+	height:350px;
 }
 select,.myScore, .myRequest, .photo_up, .submit_photo {
   width: 250px;
@@ -40,11 +46,21 @@ background:#2b2984;
     
 }
 .submit_photo{
-	margin-top: 0px;
+	margin-top: 10px;
 }
 .myRequest{
 	float:right;
 	margin-top:0;
+}
+.appInfo{
+	float:right;
+	font-weight: bold;
+	margin-top: 10px;
+	margin-right: 130px;
+}
+.appInfo>h5{
+	font-size: 18px;
+	font-weight:bold;
 }
 .col-lg-6{
 

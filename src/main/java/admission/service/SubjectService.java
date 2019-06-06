@@ -25,6 +25,11 @@ public class SubjectService {
 	    public Subject findById(Integer Id) {
 	    	return subjectRepository.findById(Id).get();
 	    }
+
+		public void deleteById(Integer id) {
+			subjectRepository.deleteById(id);
+			
+		}
 			
 	    	
 	    

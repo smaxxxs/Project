@@ -1,11 +1,13 @@
 package admission.service;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import admission.config.FacultyRating;
 import admission.dao.FacultyRepository;
 import admission.domain.Applicant;
 import admission.domain.Faculty;
@@ -14,7 +16,9 @@ import admission.domain.Faculty;
 public class FacultyService {
 	 @Autowired
 	    private FacultyRepository facultyRepository;
-
+	 @Autowired
+	 	private ApplicantService applicantService;
+	 
 
 	    public Faculty save(Faculty faculty) {
 	    	return facultyRepository.save(faculty);
@@ -35,16 +39,30 @@ public class FacultyService {
 	public Faculty saveAndRate(Faculty faculty, Applicant applicant) {
 		List<Applicant> applicants = faculty.getApplicants();
 		applicants.add(applicant);
-	//	applicants.forEach(System.out::println);
+
 	
 		if (applicant.getScore() != null) {
 			List<Applicant> sortedApplicants = applicants.stream()
-					.sorted((a1, a2) -> a2.getScore().compareTo(a1.getScore())).collect(Collectors.toList());
-			for (int i = 0; i < sortedApplicants.size(); i++) {
-				sortedApplicants.get(i).setRate(i + 1);
-			}
+					.sorted((a1, a2) -> a1.getScore().
+							compareTo(a2.getScore())).collect(Collectors.toList());
+//			for (int i = 0; i < sortedApplicants.size(); i++) {
+//				Applicant thisApplicant = sortedApplicants.get(i);
+//				FacultyRating fr = new FacultyRating();
+//				fr.setFaculty(faculty);
+//				fr.setApplicant(thisApplicant);
+//				fr.setRating(i+1);
+//				
+//				Set<FacultyRating> thisRate = thisApplicant.getRatings();
+//				
+//				thisRate.add(fr);
+//				System.out.println(thisRate);
+//				thisApplicant.setRatings(thisRate);
+//				applicantService.save(thisApplicant);
+//				System.out.println(thisApplicant);
+//			}
 
 			faculty.setApplicants(sortedApplicants);
+			faculty.setGrade((double) (sortedApplicants.size()>faculty.getPlaces()?sortedApplicants.get(faculty.getPlaces()-1).getScore():0));
 			facultyRepository.save(faculty);
 			
 		}
@@ -57,10 +75,21 @@ public class FacultyService {
 		applicants.remove(applicant);
 			if (applicant.getScore() != null) {
 			List<Applicant> sortedApplicants = applicants.stream()
-					.sorted((a1, a2) -> a2.getScore().compareTo(a1.getScore())).collect(Collectors.toList());
-			for (int i = 0; i < sortedApplicants.size(); i++) {
-				sortedApplicants.get(i).setRate(i + 1);
-			}
+					.sorted((a1, a2) -> a1.getScore().compareTo(a2.getScore())).collect(Collectors.toList());
+//			for (int i = 0; i < sortedApplicants.size(); i++) {
+//				Applicant thisApplicant = sortedApplicants.get(i);
+//				FacultyRating fr = new FacultyRating();
+//				fr.setFaculty(faculty);
+//				fr.setApplicant(thisApplicant);
+//				fr.setRating(i+1);
+//				Set<FacultyRating> thisRate = thisApplicant.getRatings();
+//				
+//				thisRate.add(fr);
+//				thisApplicant.setRatings(thisRate);
+//			}
+			faculty.setApplicants(sortedApplicants);
+			faculty.setGrade((double) (sortedApplicants.size()>=faculty.getPlaces()?sortedApplicants.get(faculty.getPlaces()-1).getScore():0));
+			
 			facultyRepository.save(faculty);
 		}
 		return faculty;
