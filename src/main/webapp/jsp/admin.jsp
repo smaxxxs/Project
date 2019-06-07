@@ -137,8 +137,13 @@
 									<tbody>
 
 										<c:forEach items="${applicants}" var="applicant">
-											<tr>
-												<td class="applicant_id">${applicant.id}</td>
+										 
+											<tr class="appRow">
+												<td class="applicant_id">${applicant.id}
+												 <div class="img_wraper">
+ 										 <img  src="/photos/${applicant.nickName}.jpg">
+ 													 </div></td>
+												
 												<td>${applicant.surname}</td>
 												<td>${applicant.name}</td>
 												<td>${applicant.score}</td>
@@ -182,11 +187,15 @@
 									<tbody>
 
 										<c:forEach items="${requests}" var="request">
-											<tr>
+											<tr class = "appRow" >
 												<td class="req_id">${request.id}</td>
 												<td title="${request.faculty}">${request.faculty.name}</td>
 												<td title="${request.applicant}">${request.applicant.surname}
-													${request.applicant.name}</td>
+													${request.applicant.name}
+													<div class="img_wraper">
+ 										 <img  src="/photos/${request.applicant.nickName}.jpg">
+ 													 </div>
+ 												</td>
 												<td class="status">${request.status}</td>
 												<td><a class="approve" title="Approve"
 													data-toggle="tooltip"><i class="material-icons" style="color:green">thumb_up</i></a>

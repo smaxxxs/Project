@@ -3,6 +3,30 @@
         background: #F5F7FA;
 		font-family: 'Open Sans', sans-serif;
 	}
+	.img_wraper{
+	display:none;
+	width: 250px;
+	height:350px;
+	float:left;
+	background-image: url("/photos/nophoto.jpg");
+	background-size: cover;
+
+}
+.img_wraper>img{
+	object-fit: cover;
+	width: 250px;
+	height:350px;
+}
+.appRow{
+	
+}
+.appRow:hover .img_wraper{
+	 display:block;
+	  position:absolute;
+    top:120px;
+    z-index:9999;
+    right:0;
+}
 	.table-wrapper {
 		width: 700px;
 		margin: 30px auto;
