@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,14 +16,16 @@ import admission.domain.Request;
 
 @Service
 public class RequestService {
+	private Logger log = LoggerFactory.getLogger(RequestService.class);
 	 @Autowired
 	    private RequestRepository requestRepository;
 	 
 	 @Autowired
 		ApplicantService applicantService;
 
-	    public Request save(Request faculty) {
-	    	return requestRepository.save(faculty);
+	    public Request save(Request req) {
+	    	log.info(" request was saved"+ req);
+	    	return requestRepository.save(req);
 	    	    }
 	    
 	    public List<Request> getAllRequests(){
@@ -44,7 +48,7 @@ public class RequestService {
 	    }
 	    	
 	    public void deleteByApplicant(Applicant app) {
-	    	
+	    	log.info(" request was deleted applicant - "+ app);
 	    	getAllRequests().forEach(r->{if (r.getApplicant().equals(app)) {requestRepository.delete(r);} });
 	    }
 	    public void deleteByFaculty(Faculty fac) {
@@ -53,6 +57,7 @@ public class RequestService {
 	    }
 
 		public void deleteById(Integer id) {
+			log.info(" request "+ findById(id)+" was deleted");
 			requestRepository.deleteById(id);
 			
 		}

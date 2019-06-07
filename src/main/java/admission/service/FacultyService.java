@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +16,7 @@ import admission.domain.Faculty;
 
 @Service
 public class FacultyService {
+	private Logger log = LoggerFactory.getLogger(FacultyService.class);
 	 @Autowired
 	    private FacultyRepository facultyRepository;
 	 @Autowired
@@ -21,6 +24,7 @@ public class FacultyService {
 	 
 
 	    public Faculty save(Faculty faculty) {
+	    	log.debug("New faculty was saved -->>"+ faculty);
 	    	return facultyRepository.save(faculty);
 	    	    }
 	    
@@ -33,10 +37,12 @@ public class FacultyService {
 	    }
 	    
 	    public void deleteById (Integer id) {
+	    	log.debug(findById(id)+" was deleted");
 	    	facultyRepository.deleteById(id);
 	    }
 			
 	public Faculty saveAndRate(Faculty faculty, Applicant applicant) {
+		log.debug(applicant+" was added to "+ faculty);
 		List<Applicant> applicants = faculty.getApplicants();
 		applicants.add(applicant);
 
@@ -71,7 +77,7 @@ public class FacultyService {
 	    
 	public Faculty deleteAndRate(Faculty faculty, Applicant applicant) {
 		List<Applicant> applicants = faculty.getApplicants();
-		
+		log.debug(applicant+" was deleted from "+ faculty);
 		applicants.remove(applicant);
 			if (applicant.getScore() != null) {
 			List<Applicant> sortedApplicants = applicants.stream()

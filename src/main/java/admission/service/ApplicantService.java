@@ -3,6 +3,8 @@ package admission.service;
 import java.util.List;
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -12,6 +14,7 @@ import admission.domain.Applicant;
 
 @Service
 public class ApplicantService {
+	private Logger log = LoggerFactory.getLogger(ApplicantService.class);
 	@Autowired
 	private ApplicantRepository applicantRepository;
 	@Autowired
@@ -27,6 +30,7 @@ public class ApplicantService {
 		if (userService.findByNickName(applicant.getNickName()) == null)
 			userService.save(applicant);
 		applicantRepository.save(applicant);
+		log.debug("New applicant registered -->> "+applicant);
 	}
 
 	public Applicant findByNickName(String nickName) {
@@ -41,13 +45,11 @@ public class ApplicantService {
 	}
 
 	public void deleteById(Integer id) {
+		log.debug(applicantRepository.findById(id)+" was deleted");
 		userService.deleteByNickName(findById(id).get().getNickName());
 		requestService.deleteByApplicant(applicantRepository.getOne(id));
 		applicantRepository.deleteById(id);
-//		userService.cleanEmptyApplicants();
+		
 	}
-//	   public Applicant update (Applicant applicant) {
-//		return applicantRepository.update(applicant);
-//		   
-//	   }
+
 }
