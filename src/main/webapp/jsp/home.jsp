@@ -1,7 +1,10 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+		pageEncoding="UTF-8"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport"
@@ -9,7 +12,7 @@
 <meta name="description" content="">
 <meta name="author" content="">
 
-<title>Welcome!!!</title>
+<title><spring:message code='home.title'/>!!!</title>
 
 <!-- Bootstrap core CSS -->
 <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -17,6 +20,23 @@
 <!-- Custom styles for this template -->
 <link href="/css/scrolling-nav.css" rel="stylesheet">
 <link href="/css/home.css" rel="stylesheet">
+	<script
+	src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script
+	src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+	<script type="text/javascript">
+	$(document).ready(function() {
+		var selItem = localStorage.getItem("locales");
+		$('#locales').val(selItem ? selItem : 'en');
+		$("#locales").change(function() {
+			var selectedOption = $('#locales').val();
+			if (selectedOption) {
+				window.location.replace('?lang=' + selectedOption);
+				localStorage.setItem("locales", selectedOption);
+			}
+		});
+	});
+</script>
 </head>
 
 <body id="page-top" class="text-white">
@@ -31,26 +51,36 @@
 				aria-expanded="false" aria-label="Toggle navigation">
 				<span class="navbar-toggler-icon"></span>
 			</button>
+			<div class="choice" >
+				<fieldset>
+					<label><spring:message code="home.choose_language" /></label> <select
+						id="locales">
+						<option value="en_US"><spring:message code='home.english'/></option>
+						<option value="uk"><spring:message code='home.ukrainian'/></option>
+
+ 					</select>
+				</fieldset>
+			</div>
 			<div class="collapse navbar-collapse" id="navbarResponsive">
 				<ul class="navbar-nav ml-auto">
 					<li class="nav-item"><a class="nav-link js-scroll-trigger"
-						href="login">Login/Register</a></li>
+						href="login"><spring:message code="home.signin" /></a></li>
 					<li class="nav-item"><a class="nav-link js-scroll-trigger"
-						href="#about">About</a></li>
+						href="#about"><spring:message code='home.about'/></a></li>
 					<li class="nav-item"><a class="nav-link js-scroll-trigger"
-						href="#services">Admission</a></li>
+						href="#services"><spring:message code='home.admission'/></a></li>
 					<li class="nav-item"><a class="nav-link js-scroll-trigger"
-						href="#contact">Contact</a></li>
+						href="#contact"><spring:message code='home.contact'/></a></li>
 				</ul>
 			</div>
 		</div>
+		
 	</nav>
 
 	<header class="bg_1 text-white">
 		<div class="container text-center">
-			<h1>Welcome to University of Magic</h1>
-			<p class="lead">It is not real university, just a joke for the
-				final project of Logos IT Academy Java Developer course</p>
+			<h1><spring:message code='home.main_head'/></h1>
+			<p class="lead"><spring:message code='home.main_head_exp'/></p>
 		</div>
 	</header>
 
