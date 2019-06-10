@@ -11,7 +11,7 @@ import admission.domain.Applicant;
 import admission.domain.Role;
 import admission.domain.User;
 
-@Service
+@Service("userService")
 public class UserService {
 	 @Autowired
 	    private UserRepository userRepository;
