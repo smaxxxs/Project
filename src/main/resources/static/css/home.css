@@ -1,0 +1,33 @@
+ @font-face {
+    font-family: Potter;
+    src: url('/fonts/HARRYP.TTF'); 
+   }
+   body{
+   font-family: "Potter";
+   font-size:25px;
+   }
+.bg_1{
+	background: url('/img/hogwarts-boat.jpg');
+  background-size: cover
+}
+.bg_2{
+	background: url('/img/Dumbledores_speech_at_the_Great_Hall_in_1996.JPG');
+  background-size: cover
+}
+.bg_3{
+	background: url('/img/hat.png');
+  background-size: cover
+}
+.bg_4{
+	background: url('/img/u-g-F9B4RV0.jpg');
+  background-size: cover
+}
+a {
+color:#adb5bd;
+font-weight: bold;
+
+}
+.choice{
+	position:absolute;
+	left:250px;
+}

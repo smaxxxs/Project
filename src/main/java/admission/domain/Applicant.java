@@ -1,31 +1,130 @@
 package admission.domain;
 
+import java.util.Set;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+
+import admission.config.FacultyRating;
+
+@Entity
+@Table(name = "aplicants")
 public class Applicant {
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO, generator="applicant_seq_gen")
+	@SequenceGenerator(name="applicant_seq_gen", sequenceName="APPLICANT_SEQ")
 	private Integer id;
 	private String surname;
 	private String name;
 	// total points with 3 subjects
 	private Integer score;
 	// applicant's rating for admission to the faculty. Automatically counted.
-	private Integer rate;
+
+    @OneToMany(mappedBy = "applicant")
+    private Set<FacultyRating> ratings;
+    
+	private String nickName;
+	
+	private String password;
+
+
+
+	@Override
+	public String toString() {
+		return "Applicant [id=" + id + ", surname=" + surname + ", name=" + name + ", score=" + score + ", ratings="
+				+ ratings + ", nickName=" + nickName + "]";
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + ((nickName == null) ? 0 : nickName.hashCode());
+		result = prime * result + ((password == null) ? 0 : password.hashCode());
+		result = prime * result + ((ratings == null) ? 0 : ratings.hashCode());
+		result = prime * result + ((score == null) ? 0 : score.hashCode());
+		result = prime * result + ((surname == null) ? 0 : surname.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Applicant other = (Applicant) obj;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
+			return false;
+		if (nickName == null) {
+			if (other.nickName != null)
+				return false;
+		} else if (!nickName.equals(other.nickName))
+			return false;
+		if (password == null) {
+			if (other.password != null)
+				return false;
+		} else if (!password.equals(other.password))
+			return false;
+		if (ratings == null) {
+			if (other.ratings != null)
+				return false;
+		} else if (!ratings.equals(other.ratings))
+			return false;
+		if (score == null) {
+			if (other.score != null)
+				return false;
+		} else if (!score.equals(other.score))
+			return false;
+		if (surname == null) {
+			if (other.surname != null)
+				return false;
+		} else if (!surname.equals(other.surname))
+			return false;
+		return true;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public String getNickName() {
+		return nickName;
+	}
+
+	public void setNickName(String nickName) {
+		this.nickName = nickName;
+	}
+
+	
+
+	
 
 	public Applicant() {
 	}
 
-	public Applicant(Integer id, String surname, String name, Integer score, Integer rate) {
-		this.id = id;
-		this.surname = surname;
-		this.name = name;
-		this.score = score;
-		this.rate = rate;
-	}
 
-	public Applicant(Integer id, String surname, String name, Integer score) {
-		this.id = id;
-		this.surname = surname;
-		this.name = name;
-		this.score = score;
-	}
 
 	public Integer getId() {
 		return id;
@@ -59,55 +158,13 @@ public class Applicant {
 		this.score = score;
 	}
 
-	public Integer getRate() {
-		return rate;
+	public Set<FacultyRating> getRatings() {
+		return ratings;
 	}
 
-	public void setRate(Integer rate) {
-		this.rate = rate;
+	public void setRatings(Set<FacultyRating> ratings) {
+		this.ratings = ratings;
 	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		result = prime * result + ((surname == null) ? 0 : surname.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Applicant other = (Applicant) obj;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
-			return false;
-		if (name == null) {
-			if (other.name != null)
-				return false;
-		} else if (!name.equals(other.name))
-			return false;
-		if (surname == null) {
-			if (other.surname != null)
-				return false;
-		} else if (!surname.equals(other.surname))
-			return false;
-		return true;
-	}
-
-	@Override
-	public String toString() {
-		return "Applicant [id=" + id + ", surname=" + surname + ", name=" + name + ", score=" + score + ", rate=" + rate
-				+ "]";
-	}
-
+	
 }
+
