@@ -3,7 +3,7 @@ package admission.domain;
 import java.util.List;
 
 public class Statement {
-	private List <Request> requests;
+	private List<Request> requests;
 
 	public Statement() {
 	}
@@ -24,6 +24,5 @@ public class Statement {
 	public String toString() {
 		return "Statement [requests=" + requests + "]";
 	}
-	
-	
+
 }

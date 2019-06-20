@@ -4,7 +4,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -20,7 +20,7 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<!-- <script src="//code.jquery.com/jquery-1.11.1.min.js"></script> -->
+
 <script src="/js/admin.js"></script>
 <script> $(function() { $( "#tabs" ).tabs() }); </script>
 </head>
@@ -36,7 +36,8 @@
 						<li><a href="#applicants" data-toggle="tab">Applicants</a></li>
 						<li><a href="#requests" data-toggle="tab">Requests</a></li>
 						<li><a href="#subjects" data-toggle="tab">Subjects</a></li>
-						<li><a href="#addNewAdmin" data-toggle="tab">Add new admin</a></li>
+						<li><a href="#addNewAdmin" data-toggle="tab">Add new
+								admin</a></li>
 						<li><a href="#logout" data-toggle="tab">Logout</a></li>
 					</ul>
 					<div class="tab-content">
@@ -74,20 +75,19 @@
 											<c:forEach items="${faculties}" var="faculty">
 												<tr>
 													<td class="faculty_id">${faculty.id}</td>
-													<td ><a  class="faculty_name" href="faculty?facultyId=${faculty.id}">${faculty.name}</a></td>
+													<td><a class="faculty_name"
+														href="faculty?facultyId=${faculty.id}">${faculty.name}</a></td>
 													<td>${faculty.places}</td>
-													
-													<td><c:forEach items ="${faculty.subjects}" var="subject">${subject.name}; &nbsp</c:forEach></td>
-													
+
+													<td><c:forEach items="${faculty.subjects}"
+															var="subject">${subject.name}; &nbsp</c:forEach></td>
+
 													<td>${fn:length(faculty.applicants)}</td>
-													<td>
-													
-															
-															 <a class="editf" href="faculty?facultyId=${faculty.id}"
-														title="Edit" data-toggle="tooltip"><i
-															class="material-icons">&#xE254;</i></a> <a class="delete facultyToDelete"
-														title="Delete" data-toggle="tooltip"><i
-															class="material-icons">&#xE872;</i></a></td>
+													<td><a class="editf"
+														href="faculty?facultyId=${faculty.id}" title="Edit"
+														data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
+														<a class="delete facultyToDelete" title="Delete"
+														data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a></td>
 												</tr>
 											</c:forEach>
 											<tr>
@@ -96,14 +96,7 @@
 														path="name" name="name" id="name" /></td>
 												<td><form:input type="number" class="form-control"
 														path="places" name="department" id="department" /></td>
-												<%-- <td><form:input type="text" class="form-control"
-														path="subjects" name="phone" id="phone" /></td> --%>
-												<td><%-- <form:select id="uexperience" class="decorated" path="subjects" multiple = "multiple">
-                  <option id="selectHeader"> Select subjects</option>
-                              <form:options items="${subjects}" itemValue="subjectId" itemLabel="subjectId" />
-              
-                  </form:select> --%></td>
-												<td></td>
+																								<td></td>
 												<td>
 													<button class="btn_sign_up" type="submit">add</button> <!--                         <input type="submit" value="    add    " /> -->
 												</td>
@@ -122,7 +115,7 @@
 											<b>Applicants</b>
 										</h2>
 									</div>
-								<br>
+									<br>
 								</div>
 								<table class="table table-bordered">
 									<thead>
@@ -137,22 +130,23 @@
 									<tbody>
 
 										<c:forEach items="${applicants}" var="applicant">
-										 
+
 											<tr class="appRow">
 												<td class="applicant_id">${applicant.id}
-												 <div class="img_wraper">
- 										 <img  src="/photos/${applicant.nickName}.jpg">
- 													 </div></td>
-												
+													<div class="img_wraper">
+														<img src="/photos/${applicant.nickName}.jpg">
+													</div>
+												</td>
+
 												<td>${applicant.surname}</td>
 												<td>${applicant.name}</td>
 												<td>${applicant.score}</td>
-												<td><a class="add editApplicantConfirm" title="Add" data-toggle="tooltip"><i
-														class="material-icons">&#xE03B;</i></a> <a class="edit editApplicant"
-													title="Edit" data-toggle="tooltip"><i
-														class="material-icons">&#xE254;</i></a> <a class="delete applicantToDelete"
-													title="Delete" data-toggle="tooltip"><i
-														class="material-icons">&#xE872;</i></a></td>
+												<td><a class="add editApplicantConfirm" title="Add"
+													data-toggle="tooltip"><i class="material-icons">&#xE03B;</i></a>
+													<a class="edit editApplicant" title="Edit"
+													data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
+													<a class="delete applicantToDelete" title="Delete"
+													data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a></td>
 											</tr>
 										</c:forEach>
 										<tr>
@@ -163,7 +157,7 @@
 						</div>
 
 						<div class="tab-pane" id="requests">
-						<div class="table-wrapper">
+							<div class="table-wrapper">
 								<div class="table-title">
 
 									<div class="col-sm-8">
@@ -171,7 +165,7 @@
 											<b>Requests</b>
 										</h2>
 									</div>
-									
+
 									<br>
 								</div>
 								<table class="table table-bordered">
@@ -187,20 +181,21 @@
 									<tbody>
 
 										<c:forEach items="${requests}" var="request">
-											<tr class = "appRow" >
+											<tr class="appRow">
 												<td class="req_id">${request.id}</td>
 												<td title="${request.faculty}">${request.faculty.name}</td>
 												<td title="${request.applicant}">${request.applicant.surname}
 													${request.applicant.name}
 													<div class="img_wraper">
- 										 <img  src="/photos/${request.applicant.nickName}.jpg">
- 													 </div>
- 												</td>
+														<img src="/photos/${request.applicant.nickName}.jpg">
+													</div>
+												</td>
 												<td class="status">${request.status}</td>
 												<td><a class="approve" title="Approve"
-													data-toggle="tooltip"><i class="material-icons" style="color:green">thumb_up</i></a>
-																		<a title="Decline" class="decline" data-toggle="tooltip"><i
-														class="material-icons" style="color:red">thumb_down</i></a></td>
+													data-toggle="tooltip"><i class="material-icons"
+														style="color: green">thumb_up</i></a> <a title="Decline"
+													class="decline" data-toggle="tooltip"><i
+														class="material-icons" style="color: red">thumb_down</i></a></td>
 											</tr>
 										</c:forEach>
 										<tr>
@@ -241,19 +236,19 @@
 												<tr>
 													<td class="subject_id">${subject.subjectId}</td>
 													<td class="subject_name">${subject.name}</td>
-													<td><a class="add editSubjectConfirm" title="Add" data-toggle="tooltip"><i
-															class="material-icons">&#xE03B;</i></a> <a class="edit"
-														title="Edit" data-toggle="tooltip"><i
-															class="material-icons">&#xE254;</i></a> <a class="delete subjectToDelete"
-														title="Delete" data-toggle="tooltip"><i
-															class="material-icons">&#xE872;</i></a></td>
+													<td><a class="add editSubjectConfirm" title="Add"
+														data-toggle="tooltip"><i class="material-icons">&#xE03B;</i></a>
+														<a class="edit" title="Edit" data-toggle="tooltip"><i
+															class="material-icons">&#xE254;</i></a> <a
+														class="delete subjectToDelete" title="Delete"
+														data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a></td>
 												</tr>
 											</c:forEach>
 											<tr>
 												<td></td>
 												<td><form:input type="text" class="form-control"
 														path="name" name="name" id="name" /></td>
-																			
+
 												<td>
 													<button class="btn_sign_up" type="submit">add</button> <!--                         <input type="submit" value="    add    " /> -->
 												</td>
@@ -263,29 +258,29 @@
 								</form:form>
 							</div>
 						</div>
-						
+
 
 						<div class="tab-pane" id="addNewAdmin">
 							<div class="table-wrapper">
 								<h1>You can add new admin here</h1>
-									<form:form method="post" action="/addAdmin"
+								<form:form method="post" action="/addAdmin"
 									modelAttribute="newAdmin">
-								
-									<label for="fname">NickName</label> 
-									<form:input type="text" class="formAddAdmin"
-										id="fname" path="nickName" placeholder="NickName"/>
 
-									<label for="lname">Password</label> 
-									<form:input type="password" class="formAddAdmin"
-										id="lname" path="password" placeholder="Password"/>
+									<label for="fname">NickName</label>
+									<form:input type="text" class="formAddAdmin" id="fname"
+										path="nickName" placeholder="NickName" />
+
+									<label for="lname">Password</label>
+									<form:input type="password" class="formAddAdmin" id="lname"
+										path="password" placeholder="Password" />
 									<button class="addAdminButton" type="submit">Add Admin</button>
-																</form:form>
+								</form:form>
 							</div>
 						</div>
 						<div class="tab-pane" id="logout">
 							<div class="">
 								<h1>Do you realy want to leave admin tools?</h1>
-							 <a href="<c:url value="/logout" />" class="exitButton">exit</a>
+								<a href="<c:url value="/logout" />" class="exitButton">exit</a>
 							</div>
 						</div>
 					</div>

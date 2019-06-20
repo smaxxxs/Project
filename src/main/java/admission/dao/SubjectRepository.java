@@ -6,4 +6,6 @@ import admission.domain.Subject;
 
 public interface SubjectRepository extends JpaRepository<Subject,Integer>{
 
+	Subject findByName(String name);
+
 }

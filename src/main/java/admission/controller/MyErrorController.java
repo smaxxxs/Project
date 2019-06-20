@@ -11,18 +11,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class MyErrorController implements ErrorController {
 
-@RequestMapping(value="/error")
-public String handleError(HttpServletRequest request, Model model) {
-Object status = request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
+	@RequestMapping(value = "/error")
+	public String handleError(HttpServletRequest request, Model model) {
+		Object status = request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
 
-if (status != null) {
-Integer statusCode = Integer.valueOf(status.toString());
-model.addAttribute("error",statusCode);
-}
-return "403";
-}
-@Override
-public String getErrorPath() {
-return "403";
-}
+		if (status != null) {
+			Integer statusCode = Integer.valueOf(status.toString());
+			model.addAttribute("error", statusCode);
+		}
+		return "403";
+	}
+
+	@Override
+	public String getErrorPath() {
+		return "403";
+	}
 }

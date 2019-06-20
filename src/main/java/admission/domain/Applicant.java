@@ -1,43 +1,32 @@
 package admission.domain;
 
-import java.util.Set;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-
-import admission.config.FacultyRating;
 
 @Entity
 @Table(name = "aplicants")
 public class Applicant {
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO, generator="applicant_seq_gen")
-	@SequenceGenerator(name="applicant_seq_gen", sequenceName="APPLICANT_SEQ")
+	@GeneratedValue(strategy = GenerationType.AUTO, generator = "applicant_seq_gen")
+	@SequenceGenerator(name = "applicant_seq_gen", sequenceName = "APPLICANT_SEQ")
 	private Integer id;
 	private String surname;
 	private String name;
 	// total points with 3 subjects
 	private Integer score;
-	// applicant's rating for admission to the faculty. Automatically counted.
 
-    @OneToMany(mappedBy = "applicant")
-    private Set<FacultyRating> ratings;
-    
 	private String nickName;
-	
+
 	private String password;
-
-
 
 	@Override
 	public String toString() {
-		return "Applicant [id=" + id + ", surname=" + surname + ", name=" + name + ", score=" + score + ", ratings="
-				+ ratings + ", nickName=" + nickName + "]";
+		return "Applicant [id=" + id + ", surname=" + surname + ", name=" + name + ", score=" + score + ", nickName="
+				+ nickName + "]";
 	}
 
 	@Override
@@ -48,7 +37,6 @@ public class Applicant {
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result + ((nickName == null) ? 0 : nickName.hashCode());
 		result = prime * result + ((password == null) ? 0 : password.hashCode());
-		result = prime * result + ((ratings == null) ? 0 : ratings.hashCode());
 		result = prime * result + ((score == null) ? 0 : score.hashCode());
 		result = prime * result + ((surname == null) ? 0 : surname.hashCode());
 		return result;
@@ -83,11 +71,6 @@ public class Applicant {
 				return false;
 		} else if (!password.equals(other.password))
 			return false;
-		if (ratings == null) {
-			if (other.ratings != null)
-				return false;
-		} else if (!ratings.equals(other.ratings))
-			return false;
 		if (score == null) {
 			if (other.score != null)
 				return false;
@@ -117,14 +100,8 @@ public class Applicant {
 		this.nickName = nickName;
 	}
 
-	
-
-	
-
 	public Applicant() {
 	}
-
-
 
 	public Integer getId() {
 		return id;
@@ -158,13 +135,4 @@ public class Applicant {
 		this.score = score;
 	}
 
-	public Set<FacultyRating> getRatings() {
-		return ratings;
-	}
-
-	public void setRatings(Set<FacultyRating> ratings) {
-		this.ratings = ratings;
-	}
-	
 }
-

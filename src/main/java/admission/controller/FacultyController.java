@@ -22,58 +22,61 @@ public class FacultyController {
 
 	@Autowired
 	private FacultyService facultyService;
-	
+
 	@Autowired
 	private UserService userService;
-	
+
 	@Autowired
 	private RequestService requestService;
-	
+
 	@Autowired
 	private SubjectService subjectService;
-	
+
 	@RequestMapping(value = "/addFaculty", method = RequestMethod.POST)
 	public String addNewFaculty(@ModelAttribute("newFaculty") Faculty faculty) {
-	
+
 		facultyService.save(faculty);
 		return "redirect:admin#faculty";
 	}
+
 	@RequestMapping(value = "/addFaculty", method = RequestMethod.GET)
 	public ModelAndView out() {
-		ModelAndView mav =new ModelAndView("admin");
-		mav.addObject("faculties",facultyService.getAllFuculties());
+		ModelAndView mav = new ModelAndView("admin");
+		mav.addObject("faculties", facultyService.getAllFuculties());
 		return mav;
-		
+
 	}
+
 	@RequestMapping(value = "/editFaculty", method = RequestMethod.POST)
 	public ModelAndView editFaculty(@ModelAttribute("thisFaculty") Faculty faculty) {
-		ModelAndView mav =new ModelAndView("redirect:faculty");
+		ModelAndView mav = new ModelAndView("redirect:faculty");
 		mav.addObject("facultyId", faculty.getId());
-		Faculty oldFaculty=facultyService.findById(faculty.getId());
+		Faculty oldFaculty = facultyService.findById(faculty.getId());
 		oldFaculty.setName(faculty.getName());
 		oldFaculty.setPlaces(faculty.getPlaces());
 		oldFaculty.setSubjects(faculty.getSubjects());
 		facultyService.save(oldFaculty);
 		return mav;
-		
+
 	}
-	@RequestMapping ("faculty")
-    public String getStudent(@RequestParam  Integer facultyId, Model model,
-    		@SessionAttribute("adminNick") String nickName){
-        Faculty faculty = facultyService.findById(facultyId);
-        model.addAttribute("faculty", faculty);
-        model.addAttribute("thisFaculty", new Faculty());
-        model.addAttribute("admin", userService.findByNickName(nickName));
-        model.addAttribute("subjects", subjectService.getAllSubjectss());
-        return "faculty";
-    }
+
+	@RequestMapping("faculty")
+	public String getStudent(@RequestParam Integer facultyId, Model model,
+			@SessionAttribute("adminNick") String nickName) {
+		Faculty faculty = facultyService.findById(facultyId);
+		model.addAttribute("faculty", faculty);
+		model.addAttribute("thisFaculty", new Faculty());
+		model.addAttribute("admin", userService.findByNickName(nickName));
+		model.addAttribute("subjects", subjectService.getAllSubjectss());
+		return "faculty";
+	}
+
 	@RequestMapping(value = "/deleteFaculty", method = RequestMethod.POST)
-	public @ResponseBody
-	String deleteFaculty(@RequestParam(value = "val", required = true) String parse) {
-	    Integer facId= Integer.parseInt(parse);
-	    requestService.deleteByFaculty(facultyService.findById(facId));
-	    facultyService.deleteById(facId);
-	   
+	public @ResponseBody String deleteFaculty(@RequestParam(value = "val", required = true) String parse) {
+		Integer facId = Integer.parseInt(parse);
+		requestService.deleteByFaculty(facultyService.findById(facId));
+		facultyService.deleteById(facId);
+
 		return "admin";
-}
+	}
 }

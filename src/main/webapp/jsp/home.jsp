@@ -14,10 +14,8 @@
 
 <title><spring:message code='home.title'/>!!!</title>
 
-<!-- Bootstrap core CSS -->
 <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
-<!-- Custom styles for this template -->
 <link href="/css/scrolling-nav.css" rel="stylesheet">
 <link href="/css/home.css" rel="stylesheet">
 	<script
@@ -51,17 +49,18 @@
 				aria-expanded="false" aria-label="Toggle navigation">
 				<span class="navbar-toggler-icon"></span>
 			</button>
+			
+			<div class="collapse navbar-collapse" id="navbarResponsive">
 			<div class="choice" >
 				<fieldset>
 					<label><spring:message code="home.choose_language" /></label> <select
 						id="locales">
 						<option value="en_US"><spring:message code='home.english'/></option>
-						<option value="uk"><spring:message code='home.ukrainian'/></option>
+						<option value="uk_UA"><spring:message code='home.ukrainian'/></option>
 
  					</select>
 				</fieldset>
 			</div>
-			<div class="collapse navbar-collapse" id="navbarResponsive">
 				<ul class="navbar-nav ml-auto">
 					<li class="nav-item"><a class="nav-link js-scroll-trigger"
 						href="login"><spring:message code="home.signin" /></a></li>

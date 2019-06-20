@@ -16,39 +16,26 @@ import admission.security.CustomUserDetailsService;
 
 @Configuration
 @EnableWebSecurity
-@ComponentScan(basePackageClasses=CustomUserDetailsService.class)
-public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
+@ComponentScan(basePackageClasses = CustomUserDetailsService.class)
+public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	private UserDetailsService userDetailsService;
-	
-	@Bean(name="passwordEncoder")
-	public PasswordEncoder passwordEncoder(){
+
+	@Bean(name = "passwordEncoder")
+	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
-	
-	
-	public void configAuthentification (AuthenticationManagerBuilder auth) throws Exception {
+
+	public void configAuthentification(AuthenticationManagerBuilder auth) throws Exception {
 		auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
 	}
+
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http
-		.authorizeRequests()
-			.antMatchers("/").permitAll()
-//			.antMatchers("/home").permitAll()
-//			.antMatchers("/faculty").
-//		access("hasRole('ROLE_ADMIN')")
-		.and()
-		.formLogin()
-		.loginPage("/login")
-		.defaultSuccessUrl("/applicant").usernameParameter("nickName").passwordParameter("password")
-		.and()
-		.logout().logoutSuccessUrl("/")
-		.and()
-		.exceptionHandling().accessDeniedPage("/403")
-		.and()
-		.csrf().disable()
-		;
+		http.authorizeRequests().antMatchers("/").permitAll().and().formLogin().loginPage("/login")
+				.defaultSuccessUrl("/applicant").usernameParameter("nickName").passwordParameter("password").and()
+				.logout().logoutSuccessUrl("/").and().exceptionHandling().accessDeniedPage("/403").and().csrf()
+				.disable();
 	}
 }

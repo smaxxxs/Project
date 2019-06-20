@@ -8,23 +8,18 @@ import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.util.StringUtils;
 
-import admission.domain.Applicant;
 import admission.domain.User;
 
-public class CustomUserDetails extends User implements UserDetails{
-	
-	/**
-	 * 
-	 */
+public class CustomUserDetails extends User implements UserDetails {
+
 	private static final long serialVersionUID = 1L;
 	private List<String> userRoles;
-	
-	public CustomUserDetails (User user, List<String> userRoles) {
+
+	public CustomUserDetails(User user, List<String> userRoles) {
 		super();
 		this.userRoles = userRoles;
 	}
-	
-	
+
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		String roles = StringUtils.collectionToCommaDelimitedString(userRoles);
@@ -33,38 +28,37 @@ public class CustomUserDetails extends User implements UserDetails{
 
 	@Override
 	public String getUsername() {
-		
+
 		return super.getNickName();
 	}
 
 	@Override
 	public boolean isAccountNonExpired() {
-	
+
 		return true;
 	}
 
 	@Override
 	public boolean isAccountNonLocked() {
-		
+
 		return true;
 	}
 
 	@Override
 	public boolean isCredentialsNonExpired() {
-		
+
 		return true;
 	}
 
 	@Override
 	public boolean isEnabled() {
-		
+
 		return true;
 	}
 
-
 	@Override
 	public String getPassword() {
-		
+
 		return null;
 	}
 

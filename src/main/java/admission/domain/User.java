@@ -11,64 +11,51 @@ import javax.persistence.Table;
 @Table(name = "users")
 public class User {
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO, generator="user_seq_gen")
-	@SequenceGenerator(name="user_seq_gen", sequenceName="USER_SEQ")
+	@GeneratedValue(strategy = GenerationType.AUTO, generator = "user_seq_gen")
+	@SequenceGenerator(name = "user_seq_gen", sequenceName = "USER_SEQ")
 	private Integer id;
 	private String nickName;
 	private String password;
 	private Role role;
-	
-	
+
 	public User() {
 	}
 
-
-		public Role getRole() {
+	public Role getRole() {
 		return role;
 	}
-
 
 	public void setRole(Role role) {
 		this.role = role;
 	}
 
-
-		public Integer getId() {
+	public Integer getId() {
 		return id;
 	}
-
 
 	public void setId(Integer id) {
 		this.id = id;
 	}
 
-
 	public String getNickName() {
 		return nickName;
 	}
-
 
 	public void setNickName(String nickName) {
 		this.nickName = nickName;
 	}
 
-
-
-
 	@Override
 	public String toString() {
-		return role+" [id=" + id + ", nickName=" + nickName + ", password=" + password  + "]";
+		return role + " [id=" + id + ", nickName=" + nickName + ", password=" + password + "]";
 	}
-
 
 	public String getPassword() {
 		return password;
 	}
 
-
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
-	
+
 }

@@ -21,11 +21,11 @@ public class CustomUserDetailsService implements UserDetailsService {
 
 		User userOptional = userRepository.findByNickName(nickName);
 
-		if (userOptional!=null) {
+		if (userOptional != null) {
 			User user = userOptional;
 			return new CustomUserDetails(user, Collections.singletonList(user.getRole().toString()));
 		}
-		throw  new UsernameNotFoundException("No user present with this nickname:" + nickName);
+		throw new UsernameNotFoundException("No user present with this nickname:" + nickName);
 	}
 
 }

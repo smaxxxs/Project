@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import admission.dao.UserRepository;
 import admission.domain.Applicant;
 import admission.domain.Role;
 import admission.domain.User;
@@ -33,25 +32,6 @@ public class UserController {
 	@Autowired
 	private PasswordEncoder bCryptPasswordEncoder;
 
-//	@RequestMapping(value = "/userlogin", method = { RequestMethod.GET, RequestMethod.POST })
-//	public String login(@ModelAttribute("userlogin") User user, RedirectAttributes redirAttributes) {
-//		String redirect = "redirect:login";
-//		String nickName = user.getNickName();
-//		User consistUser = userRepo.findByNickName(nickName);
-//		if (consistUser != null && consistUser.getPassword().equals(user.getPassword())) {
-//			if (consistUser.getRole() == Role.ADMIN) {
-//				redirAttributes.addAttribute("adminNick", nickName);
-//				redirect = "redirect:admin";
-//			} else {
-//				redirAttributes.addAttribute("appNick", nickName);
-//				redirect = "redirect:applicant";
-//			}
-//
-//		}
-//		redirAttributes.addFlashAttribute("message", "login or password was incorrect! Try again to login");
-//		return redirect;
-//	}
-
 	@RequestMapping(value = "/userlogin", method = { RequestMethod.GET, RequestMethod.POST })
 	public ModelAndView login(@ModelAttribute("userlogin") User user, RedirectAttributes redirAttributes,
 			HttpSession session) {
@@ -59,24 +39,21 @@ public class UserController {
 		mav.setViewName("redirect:login");
 		String nickName = user.getNickName();
 		User consistUser = userService.findByNickName(nickName);
-		if (consistUser != null &&
-				(consistUser.getPassword().equals((user.getPassword()))||
-				bCryptPasswordEncoder.matches( user.getPassword(), consistUser.getPassword()))) {
+		if (consistUser != null && (consistUser.getPassword().equals((user.getPassword()))
+				|| bCryptPasswordEncoder.matches(user.getPassword(), consistUser.getPassword()))) {
 			if (consistUser.getRole() == Role.ADMIN) {
-//				mav.addObject("adminNick", nickName);
 				session.setAttribute("adminNick", nickName);
 				mav.setViewName("redirect:admin");
 			} else {
-//				mav.addObject("appNick", nickName);
 				session.setAttribute("appNick", nickName);
 				mav.setViewName("redirect:applicant");
 			}
 
+		} else if (consistUser == null) {
+			redirAttributes.addFlashAttribute("message", "login was incorrect! Try again to login");
 		} else
-		if (consistUser==null) 
-		{redirAttributes.addFlashAttribute("message", "login was incorrect! Try again to login");}	
-		else redirAttributes.addFlashAttribute("message", "password was incorrect! Try again to login");
-		
+			redirAttributes.addFlashAttribute("message", "password was incorrect! Try again to login");
+
 		System.out.println(mav);
 		return mav;
 	}

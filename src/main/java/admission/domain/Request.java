@@ -15,18 +15,18 @@ import javax.persistence.Table;
 @Table(name = "requests")
 public class Request {
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO, generator="request_seq_gen")
-	@SequenceGenerator(name="request_seq_gen", sequenceName="REQUEST_SEQ")
+	@GeneratedValue(strategy = GenerationType.AUTO, generator = "request_seq_gen")
+	@SequenceGenerator(name = "request_seq_gen", sequenceName = "REQUEST_SEQ")
 	private Integer id;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "faculty_id", nullable = false)
 	private Faculty faculty;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "applicant_id", nullable = false)
 	private Applicant applicant;
-	
+
 	@Enumerated(EnumType.STRING)
 	private Status status;
 
@@ -55,8 +55,6 @@ public class Request {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-
-
 
 	public Faculty getFaculty() {
 		return faculty;

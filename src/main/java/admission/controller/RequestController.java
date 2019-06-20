@@ -25,41 +25,39 @@ public class RequestController {
 
 	@Autowired
 	private RequestService requestService;
-	
+
 	@Autowired
 	private FacultyService facultyService;
-	
+
 	@Autowired
 	private ApplicantService applicantService;
-	
-	@RequestMapping(value="/addRequest",method=RequestMethod.POST)
-	public String addNewRequest(
-			@ModelAttribute("newRequest") Request newRequest, 
-			@SessionAttribute("appNick") String appnick
-			) {
+
+	@RequestMapping(value = "/addRequest", method = RequestMethod.POST)
+	public String addNewRequest(@ModelAttribute("newRequest") Request newRequest,
+			@SessionAttribute("appNick") String appnick) {
 		newRequest.setApplicant(applicantService.findByNickName(appnick));
 		newRequest.setStatus(Status.wait);
 		requestService.save(newRequest);
-	return "redirect:applicant";
+		return "redirect:applicant";
 	}
-	@RequestMapping(value="/addRequest",method=RequestMethod.GET)
+
+	@RequestMapping(value = "/addRequest", method = RequestMethod.GET)
 	public ModelAndView out() {
-		ModelAndView mav =new ModelAndView("applicant");
-	mav.addObject("faculties",facultyService.getAllFuculties());
-	return mav;
+		ModelAndView mav = new ModelAndView("applicant");
+		mav.addObject("faculties", facultyService.getAllFuculties());
+		return mav;
 	}
-	
+
 	@RequestMapping(value = "/deleteRequest", method = RequestMethod.POST)
-	public @ResponseBody
-	String deleteRequest(@RequestParam(value = "val", required = true) String parse) {
-	    Integer reqId= Integer.parseInt(parse);
-	    Request thisRequest = requestService.findById(reqId);
-	    Faculty thisFaculty = facultyService.findById(thisRequest.getFaculty().getId());
+	public @ResponseBody String deleteRequest(@RequestParam(value = "val", required = true) String parse) {
+		Integer reqId = Integer.parseInt(parse);
+		Request thisRequest = requestService.findById(reqId);
+		Faculty thisFaculty = facultyService.findById(thisRequest.getFaculty().getId());
 		Applicant applicant = applicantService.findByNickName(thisRequest.getApplicant().getNickName());
 		facultyService.deleteAndRate(thisFaculty, applicant);
-	    requestService.deleteById(reqId);
-	    
-	    return "applicant";
+		requestService.deleteById(reqId);
+
+		return "applicant";
 	}
 
 }

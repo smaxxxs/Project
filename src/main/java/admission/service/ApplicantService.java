@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import admission.dao.ApplicantRepository;
 import admission.domain.Applicant;
 
-@Service
+@Service("applicantService")
 public class ApplicantService {
 	private Logger log = LoggerFactory.getLogger(ApplicantService.class);
 	@Autowired
@@ -30,12 +30,13 @@ public class ApplicantService {
 		if (userService.findByNickName(applicant.getNickName()) == null)
 			userService.save(applicant);
 		applicantRepository.save(applicant);
-		log.debug("New applicant registered -->> "+applicant);
+		log.debug("New applicant registered -->> " + applicant);
 	}
 
 	public Applicant findByNickName(String nickName) {
 		return applicantRepository.findByNickName(nickName);
 	}
+
 	public Optional<Applicant> findById(Integer id) {
 		return applicantRepository.findById(id);
 	}
@@ -45,11 +46,19 @@ public class ApplicantService {
 	}
 
 	public void deleteById(Integer id) {
-		log.debug(applicantRepository.findById(id)+" was deleted");
+		log.debug(applicantRepository.findById(id) + " was deleted");
 		userService.deleteByNickName(findById(id).get().getNickName());
 		requestService.deleteByApplicant(applicantRepository.getOne(id));
 		applicantRepository.deleteById(id);
-		
+
+	}
+
+	public void deleteByNickName(String nick) {
+		log.debug(applicantRepository.findByNickName(nick) + " was deleted");
+		userService.deleteByNickName(nick);
+		requestService.deleteByApplicant(applicantRepository.findByNickName(nick));
+		applicantRepository.delete(findByNickName(nick));
+
 	}
 
 }

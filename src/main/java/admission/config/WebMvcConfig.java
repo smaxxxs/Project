@@ -19,7 +19,7 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 @EnableAutoConfiguration
 @Configuration
 @ComponentScan
-public class WebMvcConfig implements WebMvcConfigurer{
+public class WebMvcConfig implements WebMvcConfigurer {
 
 	@Override
 	public void addViewControllers(ViewControllerRegistry registry) {
@@ -28,8 +28,9 @@ public class WebMvcConfig implements WebMvcConfigurer{
 		registry.addViewController("/applicant").setViewName("applicant");
 		registry.addViewController("/admin").setViewName("admin");
 		registry.addViewController("/faculty").setViewName("faculty/{id}");
-	
+
 	}
+
 	@Bean
 	public InternalResourceViewResolver viewResolver() {
 		InternalResourceViewResolver resolver = new InternalResourceViewResolver();
@@ -37,6 +38,7 @@ public class WebMvcConfig implements WebMvcConfigurer{
 		resolver.setSuffix(".jsp");
 		return resolver;
 	}
+
 	@Bean
 	public MessageSource messageSource() {
 		ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
@@ -45,21 +47,21 @@ public class WebMvcConfig implements WebMvcConfigurer{
 		return messageSource;
 	}
 
- 	@Bean
+	@Bean
 	public LocaleResolver localeResolver() {
 		SessionLocaleResolver resolver = new SessionLocaleResolver();
 		resolver.setDefaultLocale(Locale.US);
 		return resolver;
 	}
 
- 	@Bean
+	@Bean
 	public LocaleChangeInterceptor localeChangeInterceptor() {
 		LocaleChangeInterceptor interceptor = new LocaleChangeInterceptor();
 		interceptor.setParamName("lang");
 		return interceptor;
 	}
 
- 	@Override
+	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 		registry.addInterceptor(localeChangeInterceptor());
 	}

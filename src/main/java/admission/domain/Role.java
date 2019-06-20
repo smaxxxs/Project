@@ -1,5 +1,5 @@
 package admission.domain;
 
 public enum Role {
-ADMIN, USER
+	ADMIN, USER
 }

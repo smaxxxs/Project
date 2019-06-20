@@ -1,25 +1,20 @@
 package admission.domain;
 
 import java.util.List;
-import java.util.Set;
-
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-
-import admission.config.FacultyRating;
 
 @Entity
 @Table(name = "faculties")
 public class Faculty {
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO, generator="faculty_seq_gen")
-	@SequenceGenerator(name="faculty_seq_gen", sequenceName="FACULTY_SEQ")
+	@GeneratedValue(strategy = GenerationType.AUTO, generator = "faculty_seq_gen")
+	@SequenceGenerator(name = "faculty_seq_gen", sequenceName = "FACULTY_SEQ")
 	private Integer id;
 	private String name;
 //needed subjects to enter this faculty
@@ -32,8 +27,6 @@ public class Faculty {
 //passing grade on this faculty.Automatically counted.
 	private Double grade;
 
-	@OneToMany(mappedBy = "faculty")
-	    Set<FacultyRating> ratings;
 	public Faculty() {
 
 	}
@@ -101,15 +94,7 @@ public class Faculty {
 	public void setGrade(Double grade) {
 		this.grade = grade;
 	}
-	
-	 public Set<FacultyRating> getRatings() {
-		return ratings;
-	}
 
-	public void setRatings(Set<FacultyRating> ratings) {
-		this.ratings = ratings;
-	}
- 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
