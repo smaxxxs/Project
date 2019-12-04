@@ -68,13 +68,8 @@ public class AdminController {
 	    Request thisRequest = requestService.findById(reqId);
 		thisRequest.setStatus(Status.approved);
 		requestService.save(thisRequest);
-		
-//Save applicant to faculty	after approved	
 		Faculty thisFaculty = facultyService.findById(thisRequest.getFaculty().getId());
-	//	List<Applicant> applicants = thisFaculty.getApplicants();
 		Applicant applicant = applicantService.findByNickName(thisRequest.getApplicant().getNickName());
-//		applicants.add(applicant);
-//		thisFaculty.setApplicants(applicants);
 		facultyService.saveAndRate(thisFaculty, applicant);
 		System.out.println(thisFaculty.toString()+applicant);
 	   	return parse;
