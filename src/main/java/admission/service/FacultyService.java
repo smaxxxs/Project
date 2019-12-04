@@ -51,22 +51,6 @@ public class FacultyService {
 			List<Applicant> sortedApplicants = applicants.stream()
 					.sorted((a1, a2) -> a1.getScore().
 							compareTo(a2.getScore())).collect(Collectors.toList());
-//			for (int i = 0; i < sortedApplicants.size(); i++) {
-//				Applicant thisApplicant = sortedApplicants.get(i);
-//				FacultyRating fr = new FacultyRating();
-//				fr.setFaculty(faculty);
-//				fr.setApplicant(thisApplicant);
-//				fr.setRating(i+1);
-//				
-//				Set<FacultyRating> thisRate = thisApplicant.getRatings();
-//				
-//				thisRate.add(fr);
-//				System.out.println(thisRate);
-//				thisApplicant.setRatings(thisRate);
-//				applicantService.save(thisApplicant);
-//				System.out.println(thisApplicant);
-//			}
-
 			faculty.setApplicants(sortedApplicants);
 			faculty.setGrade((double) (sortedApplicants.size()>faculty.getPlaces()?sortedApplicants.get(faculty.getPlaces()-1).getScore():0));
 			facultyRepository.save(faculty);
@@ -82,17 +66,7 @@ public class FacultyService {
 			if (applicant.getScore() != null) {
 			List<Applicant> sortedApplicants = applicants.stream()
 					.sorted((a1, a2) -> a1.getScore().compareTo(a2.getScore())).collect(Collectors.toList());
-//			for (int i = 0; i < sortedApplicants.size(); i++) {
-//				Applicant thisApplicant = sortedApplicants.get(i);
-//				FacultyRating fr = new FacultyRating();
-//				fr.setFaculty(faculty);
-//				fr.setApplicant(thisApplicant);
-//				fr.setRating(i+1);
-//				Set<FacultyRating> thisRate = thisApplicant.getRatings();
-//				
-//				thisRate.add(fr);
-//				thisApplicant.setRatings(thisRate);
-//			}
+
 			faculty.setApplicants(sortedApplicants);
 			faculty.setGrade((double) (sortedApplicants.size()>=faculty.getPlaces()?sortedApplicants.get(faculty.getPlaces()-1).getScore():0));
 			
