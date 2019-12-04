@@ -23,19 +23,7 @@ import admission.service.UserService;
 @DataJpaTest
 public class ApplicationTests {
 
-//	
-//	@Autowired
-//	private FacultyService facultyService;
-//	
-//	@Autowired
-//	private ApplicantService applicantService;
-//	
-//	@Autowired
-//	private RequestService requestService;
-//	
-//	@Autowired
-//	private SubjectService subjectService;
-//	
+	
 	@Autowired
 	private UserService userService;
 	
