@@ -33,24 +33,7 @@ public class UserController {
 	@Autowired
 	private PasswordEncoder bCryptPasswordEncoder;
 
-//	@RequestMapping(value = "/userlogin", method = { RequestMethod.GET, RequestMethod.POST })
-//	public String login(@ModelAttribute("userlogin") User user, RedirectAttributes redirAttributes) {
-//		String redirect = "redirect:login";
-//		String nickName = user.getNickName();
-//		User consistUser = userRepo.findByNickName(nickName);
-//		if (consistUser != null && consistUser.getPassword().equals(user.getPassword())) {
-//			if (consistUser.getRole() == Role.ADMIN) {
-//				redirAttributes.addAttribute("adminNick", nickName);
-//				redirect = "redirect:admin";
-//			} else {
-//				redirAttributes.addAttribute("appNick", nickName);
-//				redirect = "redirect:applicant";
-//			}
-//
-//		}
-//		redirAttributes.addFlashAttribute("message", "login or password was incorrect! Try again to login");
-//		return redirect;
-//	}
+
 
 	@RequestMapping(value = "/userlogin", method = { RequestMethod.GET, RequestMethod.POST })
 	public ModelAndView login(@ModelAttribute("userlogin") User user, RedirectAttributes redirAttributes,
@@ -63,11 +46,9 @@ public class UserController {
 				(consistUser.getPassword().equals((user.getPassword()))||
 				bCryptPasswordEncoder.matches( user.getPassword(), consistUser.getPassword()))) {
 			if (consistUser.getRole() == Role.ADMIN) {
-//				mav.addObject("adminNick", nickName);
 				session.setAttribute("adminNick", nickName);
 				mav.setViewName("redirect:admin");
 			} else {
-//				mav.addObject("appNick", nickName);
 				session.setAttribute("appNick", nickName);
 				mav.setViewName("redirect:applicant");
 			}
